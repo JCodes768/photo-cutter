@@ -42,7 +42,7 @@ This is a small Python script that takes scans from a half‑frame camera (like 
 
    - This downloads and installs `Pillow`. You only need to do this once (or when you change `requirements.txt`).
 
-### Basic usage – split a roll (Windows)
+### Basic usage – split a roll (Windows, command line)
 
 1. Put all your scanned images (each with two frames per JPEG) in a folder, e.g. `D:\photos\roll1`.
 2. Make sure your VS Code terminal is still in the `photo-cutter` folder (see step 3 above).
@@ -61,7 +61,7 @@ By default this will:
 - Split each file exactly down the middle.
 - Save the results to a new folder `D:\photos\roll1\split` as `<originalname>_a.jpg` and `<originalname>_b.jpg`.
 
-### Smarter split for Pentax 17 scans
+### Smarter split for Pentax 17 scans (command line)
 
 If your lab scans show a **dark black strip between the two frames** (typical for Pentax 17 half‑frame scans), use the automatic gap detection:
 
@@ -101,7 +101,56 @@ You can tweak `--crop-border` up or down (e.g. 20, 30, 40) until the outer black
 
 If you ever get an error like “`python` is not recognized…”, close VS Code completely, reopen it, open the `photo-cutter` folder again, and open a fresh terminal. That reloads the PATH changes from installing Python. On some Windows setups you may need to use `py` instead of `python`.
 
-### macOS quick start
+### Desktop app (Windows GUI)
+
+If you prefer a small window you can click on instead of the command line, you can run the GUI app.
+
+#### Run the GUI from source
+
+1. Follow the **One‑time setup (Windows)** steps above (Python + `pip install -r requirements.txt`).
+2. In VS Code’s terminal, make sure you are in the project folder:
+
+   ```powershell
+   cd "D:\OneDrive\Documents\Coding\photo-cutter"
+   ```
+
+3. Start the app:
+
+   ```powershell
+   python app_gui.py
+   # or, if you normally use `py`:
+   py app_gui.py
+   ```
+
+4. In the window that opens:
+   - Click **“Browse…”** next to **“Input folder with scans”** and pick a folder with your lab scans.
+   - Optionally set an **Output folder** (otherwise it will create `<input>\split`).
+   - Leave **“Use auto gap (recommended for Pentax 17)”** checked.
+   - Adjust **“Border crop (pixels)”** if you want to trim more/less border (25 is a good default).
+   - Click **Run** and wait for it to finish. Progress and any errors will show in the **Log** box.
+
+#### Build a standalone `.exe` with PyInstaller
+
+If you want a single `.exe` you can put on your Desktop or send to a friend:
+
+1. Make sure PyInstaller is installed (it is already listed in `requirements.txt`, but you can also run):
+
+   ```powershell
+   py -m pip install pyinstaller
+   ```
+
+2. From the project folder, run:
+
+   ```powershell
+   py -m PyInstaller --onefile --windowed app_gui.py --name PhotoCutter
+   ```
+
+3. When it finishes, you will get `dist/PhotoCutter.exe`. You can:
+   - Double‑click `PhotoCutter.exe` to run the app.
+   - Right‑click it → **Send to → Desktop (create shortcut)** to make an icon you can click.
+   - Right‑click the running app’s icon and choose **Pin to taskbar** if you want it there.
+
+### macOS quick start (command line)
 
 1. **Install Python 3** (if you don’t already have it)
    - Easiest is via Homebrew:

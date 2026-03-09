@@ -2,4 +2,7 @@ sample-scans/
 */split/
 __pycache__/
 *.pyc
+dist/
+build/
+*.spec
 
