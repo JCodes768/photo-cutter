@@ -6,6 +6,7 @@ This is a small Python script that takes scans from a half‑frame camera (like 
 
 - Python 3.9 or newer
 - `Pillow` (installed via `pip`)
+- `tkinterdnd2` (optional – enables drag-and-drop in the GUI)
 
 ### One‑time setup (Windows, very step‑by‑step)
 
@@ -125,13 +126,20 @@ If you prefer a small window you can click on instead of the command line, you c
 4. In the window that opens:
    - Click **“Browse…”** next to **“Input folder with scans”** and pick a folder with your lab scans.
    - Optionally set an **Output folder** (otherwise it will create `<input>\split`).
-   - Leave **“Use auto gap (recommended for Pentax 17)”** checked.
-   - Adjust **“Border crop (pixels)”** if you want to trim more/less border (25 is a good default).
-   - Click **Run** and wait for it to finish. Progress and any errors will show in the **Log** box.
+   - Or **drag a folder** directly onto the window to set the input path (requires `tkinterdnd2`).
+   - Leave **”Use auto gap (recommended)”** checked.
+   - Adjust **”Border crop (pixels)”** if you want to trim more/less border (25 is a good default).
+   - Click **Run** and watch the **progress bar** advance (“3 of 18”, etc.). Each filename also appears in the **Log** box.
 
-#### Build a standalone `.exe` with PyInstaller
+#### Download a pre‑built executable
 
-If you want a single `.exe` you can put on your Desktop or send to a friend:
+Pre‑built executables for **Windows** and **macOS** are available on the [Releases page](https://github.com/JCodes768/photo-cutter/releases). Just download the one for your OS and run it — no Python install needed.
+
+> **macOS note:** The macOS build is unsigned. The first time you open it, macOS Gatekeeper will block it. Right‑click the file → **Open** to bypass the warning.
+
+#### Build a standalone `.exe` locally with PyInstaller
+
+If you want to build it yourself:
 
 1. Make sure PyInstaller is installed (it is already listed in `requirements.txt`, but you can also run):
 
@@ -142,7 +150,7 @@ If you want a single `.exe` you can put on your Desktop or send to a friend:
 2. From the project folder, run:
 
    ```powershell
-   py -m PyInstaller --onefile --windowed app_gui.py --name PhotoCutter
+   py -m PyInstaller PhotoCutter.spec
    ```
 
 3. When it finishes, you will get `dist/PhotoCutter.exe`. You can:
@@ -187,4 +195,17 @@ If you want a single `.exe` you can put on your Desktop or send to a friend:
    ```
 
    - Output will go to `/Users/you/Pictures/roll1/split` with `_a` and `_b` images.
+
+### Releases and CI
+
+Every time a version tag (like `v1.1`) is pushed to GitHub, a CI workflow automatically builds executables for Windows and macOS and attaches them to a new [GitHub Release](https://github.com/JCodes768/photo-cutter/releases).
+
+To create a new release:
+
+```bash
+git tag v1.2
+git push --tags
+```
+
+The workflow can also be triggered manually from the **Actions** tab on GitHub.
 
