@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
-from typing import Iterable
+from typing import Callable, Iterable
 
 from PIL import Image
 
@@ -129,6 +129,7 @@ def process_folder(
     crop_border: int,
     overwrite: bool,
     auto_gap: bool,
+    progress_callback: Callable[[int, int, str], None] | None = None,
 ) -> None:
     if not input_dir.exists():
         raise FileNotFoundError(f"Input directory does not exist: {input_dir}")
@@ -140,7 +141,8 @@ def process_folder(
         print(f"No image files found in {input_dir}")
         return
 
-    for f in files:
+    total = len(files)
+    for i, f in enumerate(files, start=1):
         try:
             split_image(
                 f,
@@ -151,6 +153,8 @@ def process_folder(
             )
         except Exception as exc:
             print(f"Error processing {f.name}: {exc}")
+        if progress_callback is not None:
+            progress_callback(i, total, f.name)
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
