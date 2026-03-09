@@ -195,17 +195,3 @@ If you want to build it yourself:
    ```
 
    - Output will go to `/Users/you/Pictures/roll1/split` with `_a` and `_b` images.
-
-### Releases and CI
-
-Every time a version tag (like `v1.1`) is pushed to GitHub, a CI workflow automatically builds executables for Windows and macOS and attaches them to a new [GitHub Release](https://github.com/JCodes768/photo-cutter/releases).
-
-To create a new release:
-
-```bash
-git tag v1.2
-git push --tags
-```
-
-The workflow can also be triggered manually from the **Actions** tab on GitHub.
-
